@@ -47,11 +47,17 @@ scrollToBtn.addEventListener('click', e => {
 });
 
 tabsButtonsContainr.addEventListener('click', e => {
-  console.log(e.target.closest('.operations__tab'));
   const btnEl = e.target.closest('.operations__tab');
-  console.log(btnEl);
+  let contentId = btnEl.dataset.tab;
   document
     .querySelectorAll('.operations__tab')
     .forEach(btn => btn.classList.remove('operations__tab--active'));
   btnEl.classList.add('operations__tab--active');
+  const operationContents = document.querySelectorAll('.operations__content');
+  operationContents.forEach(opc =>
+    opc.classList.remove('operations__content--active')
+  );
+  document
+    .querySelector(`.operations__content--${contentId}`)
+    .classList.add('operations__content--active');
 });
