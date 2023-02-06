@@ -3,8 +3,8 @@ const overLay = document.querySelector('.overlay');
 const openButtons = document.querySelectorAll('.btn--show-modal');
 const closeButton = document.querySelector('.btn--close-modal');
 const navButtons = document.querySelectorAll('.nav__link');
-const nav = document.querySelector('.nav');
-const sectionOne = document.querySelector('.section');
+const scrollToBtn = document.querySelector('.btn--scroll-to');
+const sectionOne = document.getElementById('section--1');
 
 const openModal = e => {
   e.preventDefault();
@@ -31,7 +31,14 @@ navButtons.forEach(nv => {
     e.preventDefault();
     let sectionID = e.target.getAttribute('href').split('--')[1];
     document.querySelector(`#section--${sectionID}`).scrollIntoView({
-        behavior:"smooth"
-    })
+      behavior: 'smooth',
+    });
+  });
+});
+
+scrollToBtn.addEventListener('click', e => {
+  e.preventDefault();
+  sectionOne.scrollIntoView({
+    behavior: 'smooth',
   });
 });
