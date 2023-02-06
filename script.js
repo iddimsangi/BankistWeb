@@ -29,9 +29,7 @@ overLay.addEventListener('click', closeModal);
 navButtons.forEach(nv => {
   nv.addEventListener('click', e => {
     e.preventDefault();
-    // console.log(e.target.getAttribute('href').split('--')[1]);
     let sectionID = e.target.getAttribute('href').split('--')[1];
-    // console.log(document.querySelector(`#section--${sectionID}`));
     document.querySelector(`#section--${sectionID}`).scrollIntoView({
         behavior:"smooth"
     })
