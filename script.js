@@ -5,6 +5,9 @@ const closeButton = document.querySelector('.btn--close-modal');
 const navButtons = document.querySelectorAll('.nav__link');
 const scrollToBtn = document.querySelector('.btn--scroll-to');
 const sectionOne = document.getElementById('section--1');
+const tabsButtonsContainr = document.querySelector(
+  '.operations__tab-container'
+);
 
 const openModal = e => {
   e.preventDefault();
@@ -41,4 +44,14 @@ scrollToBtn.addEventListener('click', e => {
   sectionOne.scrollIntoView({
     behavior: 'smooth',
   });
+});
+
+tabsButtonsContainr.addEventListener('click', e => {
+  console.log(e.target.closest('.operations__tab'));
+  const btnEl = e.target.closest('.operations__tab');
+  console.log(btnEl);
+  document
+    .querySelectorAll('.operations__tab')
+    .forEach(btn => btn.classList.remove('operations__tab--active'));
+  btnEl.classList.add('operations__tab--active');
 });
