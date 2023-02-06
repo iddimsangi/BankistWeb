@@ -8,7 +8,8 @@ const sectionOne = document.getElementById('section--1');
 const tabsButtonsContainr = document.querySelector(
   '.operations__tab-container'
 );
-
+const header = document.querySelector('.header');
+const nav = document.querySelector('.nav');
 const openModal = e => {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -61,3 +62,19 @@ tabsButtonsContainr.addEventListener('click', e => {
     .querySelector(`.operations__content--${contentId}`)
     .classList.add('operations__content--active');
 });
+
+const navHeight = nav.getBoundingClientRect().height;
+// console.log(navHeight);
+const navCallBack = (entries) => {
+    const [entry] = entries;
+    console.log(entry);
+    if(!entry.isIntersecting) nav.classList.add('sticky');
+    else nav.classList.remove('sticky');
+}
+const navOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin:`-${navHeight}px`
+};
+const navObserver = new IntersectionObserver(navCallBack, navOptions);
+navObserver.observe(header);
