@@ -5,7 +5,12 @@ const closeButton = document.querySelector('.btn--close-modal');
 const navButtons = document.querySelectorAll('.nav__link');
 const scrollToBtn = document.querySelector('.btn--scroll-to');
 const sectionOne = document.getElementById('section--1');
-
+const tabsButtonsContainr = document.querySelector(
+  '.operations__tab-container'
+);
+const header = document.querySelector('.header');
+const nav = document.querySelector('.nav');
+const sections = document.querySelectorAll('.section');
 const openModal = e => {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -42,3 +47,50 @@ scrollToBtn.addEventListener('click', e => {
     behavior: 'smooth',
   });
 });
+
+tabsButtonsContainr.addEventListener('click', e => {
+  const btnEl = e.target.closest('.operations__tab');
+  let contentId = btnEl.dataset.tab;
+  document
+    .querySelectorAll('.operations__tab')
+    .forEach(btn => btn.classList.remove('operations__tab--active'));
+  btnEl.classList.add('operations__tab--active');
+  const operationContents = document.querySelectorAll('.operations__content');
+  operationContents.forEach(opc =>
+    opc.classList.remove('operations__content--active')
+  );
+  document
+    .querySelector(`.operations__content--${contentId}`)
+    .classList.add('operations__content--active');
+});
+
+const navHeight = nav.getBoundingClientRect().height;
+const navCallBack = entries => {
+  const [entry] = entries;
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+const navOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
+};
+const navObserver = new IntersectionObserver(navCallBack, navOptions);
+navObserver.observe(header);
+
+const revealSectionCall = entries => {
+  const [entry] = entries;
+  console.log(entry);
+  console.log(entry.isIntersecting);
+  if (!entry.isIntersecting) return
+  else entry.target.classList.remove('section--hidden');
+};
+const sectionObserver = new IntersectionObserver(revealSectionCall, {
+  root: null,
+  threshold: 0.15,
+});
+sections.forEach(section => {
+  section.classList.add('section--hidden');
+  sectionObserver.observe(section);
+})
+
