@@ -12,6 +12,10 @@ const header = document.querySelector('.header');
 const nav = document.querySelector('.nav');
 const sections = document.querySelectorAll('.section');
 const images = document.querySelectorAll('.lazy-img');
+const btnLeft = document.querySelector('.slider__btn--left');
+const btnRight = document.querySelector('.slider__btn--right');
+const slides = document.querySelectorAll('.slide');
+console.log(slides);
 const openModal = e => {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -81,8 +85,6 @@ navObserver.observe(header);
 
 const revealSectionCall = entries => {
   const [entry] = entries;
-  // console.log(entry);
-  // console.log(entry.isIntersecting);
   if (!entry.isIntersecting) return;
   else entry.target.classList.remove('section--hidden');
 };
@@ -94,20 +96,47 @@ sections.forEach(section => {
   section.classList.add('section--hidden');
   sectionObserver.observe(section);
 });
-const imgCallBack = (entries) =>{
+const imgCallBack = entries => {
   const [entry] = entries;
-  console.log(entry.target.src);
-  console.log(entry.target.dataset.src);
   if (!entry.isIntersecting) return;
-  entry.target.src = entry.target.dataset.src
-  entry.target.addEventListener('load', () =>{
-    entry.target.classList.remove('lazy-img')
-  })
- 
-}
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener('load', () => {
+    entry.target.classList.remove('lazy-img');
+  });
+};
 const imgObserver = new IntersectionObserver(imgCallBack, {
   root: null,
   threshold: 0.4,
 });
 
 images.forEach(img => imgObserver.observe(img));
+
+const slideNumber = slides.length;
+let currentSlide = 0;
+const goToSlide = (s) => {
+  slides.forEach((sl, i) => {
+    sl.style.transform = `translateX(${100 * (i - s)}%)`;
+  });
+};
+goToSlide(0);
+const nextSlider = () => {
+  console.log('right Button clicked');
+  if (currentSlide === slideNumber - 1) {
+    currentSlide = 0;
+  } else {
+    currentSlide++;
+  }
+  goToSlide(currentSlide)
+};
+const prevSlider = () => {
+  console.log('left Button clicked');
+  if (currentSlide == 0) {
+    currentSlide === slideNumber - 1;
+  } else {
+    currentSlide--;
+  }
+  goToSlide(currentSlide)
+};
+
+btnRight.addEventListener('click', nextSlider);
+btnLeft.addEventListener('click', prevSlider);
