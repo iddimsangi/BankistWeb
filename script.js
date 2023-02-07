@@ -142,3 +142,8 @@ const prevSlider = () => {
 
 btnRight.addEventListener('click', nextSlider);
 btnLeft.addEventListener('click', prevSlider);
+
+document.addEventListener('keydown', e => {
+  if (e.key == 'ArrowRight') nextSlider();
+  e.key === 'ArrowLeft' && prevSlider();
+});
