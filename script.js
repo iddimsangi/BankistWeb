@@ -11,6 +11,7 @@ const tabsButtonsContainr = document.querySelector(
 const header = document.querySelector('.header');
 const nav = document.querySelector('.nav');
 const sections = document.querySelectorAll('.section');
+const images = document.querySelectorAll('.lazy-img');
 const openModal = e => {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -80,9 +81,9 @@ navObserver.observe(header);
 
 const revealSectionCall = entries => {
   const [entry] = entries;
-  console.log(entry);
-  console.log(entry.isIntersecting);
-  if (!entry.isIntersecting) return
+  // console.log(entry);
+  // console.log(entry.isIntersecting);
+  if (!entry.isIntersecting) return;
   else entry.target.classList.remove('section--hidden');
 };
 const sectionObserver = new IntersectionObserver(revealSectionCall, {
@@ -92,5 +93,21 @@ const sectionObserver = new IntersectionObserver(revealSectionCall, {
 sections.forEach(section => {
   section.classList.add('section--hidden');
   sectionObserver.observe(section);
-})
+});
+const imgCallBack = (entries) =>{
+  const [entry] = entries;
+  console.log(entry.target.src);
+  console.log(entry.target.dataset.src);
+  if (!entry.isIntersecting) return;
+  entry.target.src = entry.target.dataset.src
+  entry.target.addEventListener('load', () =>{
+    entry.target.classList.remove('lazy-img')
+  })
+ 
+}
+const imgObserver = new IntersectionObserver(imgCallBack, {
+  root: null,
+  threshold: 0.4,
+});
 
+images.forEach(img => imgObserver.observe(img));
