@@ -15,7 +15,6 @@ const images = document.querySelectorAll('.lazy-img');
 const btnLeft = document.querySelector('.slider__btn--left');
 const btnRight = document.querySelector('.slider__btn--right');
 const slides = document.querySelectorAll('.slide');
-console.log(slides);
 const openModal = e => {
   e.preventDefault();
   modal.classList.remove('hidden');
@@ -111,31 +110,34 @@ const imgObserver = new IntersectionObserver(imgCallBack, {
 
 images.forEach(img => imgObserver.observe(img));
 
-const slideNumber = slides.length;
+const maxSlides = slides.length;
 let currentSlide = 0;
-const goToSlide = (s) => {
+const goToSlide = s => {
   slides.forEach((sl, i) => {
     sl.style.transform = `translateX(${100 * (i - s)}%)`;
+    console.log('CURRENT SLIDE: ' + s);
+    console.log(i, sl);
   });
 };
 goToSlide(0);
 const nextSlider = () => {
   console.log('right Button clicked');
-  if (currentSlide === slideNumber - 1) {
+  if (currentSlide === maxSlides - 1) {
     currentSlide = 0;
   } else {
     currentSlide++;
   }
-  goToSlide(currentSlide)
+  goToSlide(currentSlide);
 };
 const prevSlider = () => {
-  console.log('left Button clicked');
-  if (currentSlide == 0) {
-    currentSlide === slideNumber - 1;
+  console.log(currentSlide);
+  if (currentSlide === 0) {
+    currentSlide == maxSlides - 1;
+    console.log(currentSlide);
   } else {
     currentSlide--;
   }
-  goToSlide(currentSlide)
+  goToSlide(currentSlide);
 };
 
 btnRight.addEventListener('click', nextSlider);
